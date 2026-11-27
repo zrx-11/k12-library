@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>【幻想数学大战】·第15卷·数学的极限</title>
+<link rel="stylesheet" href="https://registry.npmmirror.com/katex/0.16.9/files/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/dist/dist/vis-network.min.css">
+<style>
+:root{
+  --bg:#f7f7f8; --panel:#ffffff; --text:#1f2328; --muted:#6b7280;
+  --accent:#2563eb; --accent-soft:#dbeafe; --border:#e5e7eb;
+  --ok:#16a34a; --bad:#dc2626; --code-bg:#f3f4f6;
+  --depth-bg:#fef9c3; --depth-border:#ca8a04;
+}
+[data-theme="dark"]{
+  --bg:#111318; --panel:#1a1d24; --text:#e5e7eb; --muted:#9ca3af;
+  --accent:#60a5fa; --accent-soft:#1e3a5f; --border:#2d333d;
+  --ok:#4ade80; --bad:#f87171; --code-bg:#20242c;
+  --depth-bg:#2a2410; --depth-border:#a16207;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:290px;flex:none;background:var(--panel);border-right:1px solid var(--border);
+  padding:14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar h1{font-size:17px;margin:2px 0 2px}
+.sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:10px}
+#q{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);margin-bottom:10px}
+.nav-sec{font-size:12px;color:var(--muted);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.4px}
+.nav-item{display:block;padding:5px 10px;border-radius:6px;color:var(--text);font-size:14px}
+.nav-item:hover{background:var(--accent-soft);text-decoration:none}
+.nav-item.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.nav-item .done{float:right;color:var(--ok);font-size:12px}
+#nav-toggle{display:none}
+.main{flex:1;min-width:0;padding:28px 40px 80px;max-width:920px;margin:0 auto}
+.page h1{font-size:26px;border-bottom:2px solid var(--border);padding-bottom:8px;margin-top:0}
+.page h2{font-size:20px;margin-top:26px}
+.page h3{font-size:17px;margin-top:22px}
+.table-wrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.page table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+.page th,.page td{border:1px solid var(--border);padding:6px 10px;text-align:left}
+.page th{background:var(--code-bg)}
+.page code{background:var(--code-bg);padding:2px 5px;border-radius:4px;font-size:.9em}
+.page pre{background:var(--code-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:13px}
+.page pre code{background:none;padding:0}
+.page blockquote{border-left:4px solid var(--accent);margin:12px 0;padding:6px 14px;background:var(--accent-soft);border-radius:0 6px 6px 0}
+.page blockquote blockquote{border-color:var(--muted)}
+.page img{max-width:100%}
+.mermaid{background:var(--code-bg);padding:14px;border-radius:8px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;white-space:pre;color:var(--muted)}
+.mermaid-hint{font-size:12px;color:var(--muted);margin:4px 0 14px}
+svg{max-width:100%;height:auto}
+/* 出处脚注 */
+.source-badge{font-size:12px;color:var(--muted);background:var(--code-bg);padding:4px 10px;border-radius:6px;margin:0 0 12px;display:inline-block}
+/* 前置知识条 */
+.prereq-bar{font-size:13px;color:var(--muted);border-left:3px solid var(--accent);padding:4px 10px;margin:0 0 12px;background:var(--accent-soft)}
+.prereq-hard a{color:var(--bad);font-weight:600}
+.prereq-soft a{color:var(--muted)}
+.prereq-rec a{color:var(--accent)}
+.prereq-tag{display:inline-block;font-size:10px;padding:0 4px;border-radius:3px;margin-right:2px;vertical-align:middle}
+.prereq-hard .prereq-tag{background:var(--bad);color:#fff}
+.prereq-soft .prereq-tag{background:var(--muted);color:#fff}
+.prereq-rec .prereq-tag{background:var(--accent);color:#fff}
+/* 误解卡片 */
+.misconception-card{margin-top:10px;padding:10px 14px;border-left:4px solid var(--bad);background:#fef2f2;border-radius:0 8px 8px 0;font-size:13px}
+.misconception-card b{color:var(--bad)}
+[data-theme="dark"] .misconception-card{background:#2a1215}
+/* 掌握度条 */
+.mastery-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin:4px 0}
+.mastery-bar>div{height:100%;background:var(--ok);transition:width .3s}
+.mastery-label{font-size:11px;color:var(--muted)}
+/* 深度推导片段 */
+.depth-fragment{margin:18px 0;border:1px solid var(--depth-border);border-radius:10px;background:var(--depth-bg);overflow:hidden}
+.depth-fragment>summary{padding:10px 14px;cursor:pointer;font-weight:600;font-size:14px;list-style:none}
+.depth-fragment>summary:hover{filter:brightness(.95)}
+.depth-body{padding:14px 18px;border-top:1px dashed var(--depth-border);background:var(--panel)}
+.depth-missing{color:var(--bad);font-size:13px;padding:8px;background:var(--code-bg);border-radius:6px}
+/* KaTeX */
+.katex-inline{font-size:1.05em}
+.katex-block{overflow-x:auto;padding:8px 0;text-align:center}
+.katex-block .katex{font-size:1.1em}
+/* 测验 */
+.quiz-item{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;background:var(--panel)}
+.quiz-q{margin:0 0 8px;font-weight:500}
+.quiz-opts label{display:block;padding:4px 0;cursor:pointer}
+.quiz-blank{width:60%;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)}
+.quiz-check{margin-top:10px;padding:6px 16px;border:none;border-radius:6px;background:var(--accent);color:#fff;cursor:pointer}
+.quiz-feedback{margin-left:12px;font-size:13px}
+.fb-ok{color:var(--ok)}.fb-bad{color:var(--bad)}
+.quiz-explain{margin-top:8px;font-size:13px;color:var(--muted);border-top:1px dashed var(--border);padding-top:6px}
+.quiz-remedy{margin-top:8px;padding:8px 12px;background:var(--accent-soft);border-radius:6px;font-size:13px}
+/* 抽认卡 */
+.flashcard{perspective:1200px;margin:24px auto;max-width:520px;cursor:pointer;user-select:none}
+.fc-inner{position:relative;width:100%;height:240px;transform-style:preserve-3d;transition:transform .5s}
+.flashcard.flip .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;
+  padding:22px;border-radius:14px;border:1px solid var(--border);background:var(--panel);font-size:16px;text-align:center}
+.fc-back{transform:rotateY(180deg);background:var(--accent-soft);color:var(--text)}
+.card-controls{display:flex;gap:14px;align-items:center;margin:12px 0;flex-wrap:wrap}
+.card-actions{display:flex;gap:12px;justify-content:center}
+.card-actions button{padding:8px 22px;border:none;border-radius:8px;cursor:pointer;font-size:14px}
+#card-known-btn{background:var(--ok);color:#fff}
+#card-again-btn{background:var(--bad);color:#fff}
+.card-counts{color:var(--muted);font-size:13px}
+.path-step{margin:8px 0;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--panel)}
+.path-step.passed{border-color:var(--ok)}
+#glossary-filter{width:100%;max-width:380px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);margin-bottom:10px}
+#glossary-list li{padding:6px 0;border-bottom:1px dashed var(--border)}
+.glossary-ref{color:var(--muted);font-size:12px}
+.search-hit{margin:6px 0}
+.search-group{margin:18px 0}
+.grp-head{font-size:13px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:5px;margin-bottom:4px}
+.grp-count{margin-left:6px;font-weight:400;opacity:.75}
+sup.cite{display:inline-block;min-width:14px;padding:0 3px;margin:0 1px;border-radius:3px;background:var(--accent-soft);color:var(--accent);font-size:11px;line-height:16px;text-align:center;cursor:pointer;vertical-align:super;font-weight:600}
+sup.cite:hover{filter:brightness(.95)}
+.cite-pop{position:fixed;right:18px;bottom:18px;max-width:380px;max-height:60vh;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.18);z-index:60;font-size:14px}
+.cite-head{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.cite-x{border:0;background:none;color:var(--muted);font-size:18px;line-height:1;cursor:pointer;padding:0 4px}
+.cite-pop blockquote{margin:0 0 8px;padding-left:10px;border-left:3px solid var(--border);color:var(--text);font-size:13px}
+.cite-zh{color:var(--muted);font-size:13px}
+@media (max-width:640px){.cite-pop{left:12px;right:12px;bottom:12px;max-width:none}}
+.syn-note{display:inline-block;margin-left:8px;padding:1px 6px;border-radius:4px;background:var(--accent-soft);color:var(--muted);font-size:12px;vertical-align:middle}
+.search-hit mark,.hl{background:#fde68a;color:inherit;padding:0 1px;border-radius:2px}
+.hit-hl{background:#fbbf24;color:inherit;border-radius:3px;box-shadow:0 0 0 2px #fde68a}
+.hit-flash{animation:hitFlash 1.8s ease-out}
+@keyframes hitFlash{from{background:#f59e0b}to{background:#fbbf24}}
+[data-theme="dark"] .search-hit mark,[data-theme="dark"] .hl{background:#92400e;color:#fef3c7}
+[data-theme="dark"] .hit-hl{background:#b45309;color:#fff;box-shadow:0 0 0 2px #78350f}
+.topbar{position:sticky;top:0;background:var(--bg);padding:8px 0;display:flex;justify-content:flex-end;z-index:10}
+#theme-btn{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:5px 12px;cursor:pointer;white-space:nowrap}
+#progress-export,#progress-import{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px;white-space:nowrap;margin-right:8px}
+#progress-bar{height:5px;background:var(--border);border-radius:3px;margin:8px 0;overflow:hidden}
+#progress-bar>div{height:100%;width:0;background:var(--accent);transition:width .3s}
+.empty{color:var(--muted);padding:20px 0}
+/* 诊断 */
+.diag-controls{margin:14px 0;padding:14px;background:var(--panel);border-radius:10px;border:1px solid var(--border)}
+#diag-start{padding:8px 20px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;font-size:14px}
+#diag-progress{margin-left:12px;color:var(--muted);font-size:13px}
+#diag-stage .quiz-item{margin:10px 0}
+#diag-result{margin-top:16px;padding:14px;background:var(--panel);border-radius:10px;border:1px solid var(--border)}
+.diag-remedy-item{padding:10px;margin:8px 0;background:var(--accent-soft);border-radius:8px;font-size:14px}
+@media print{.sidebar,.topbar,.quiz-actions,.card-actions,.card-controls,.diag-controls{display:none!important}.main{max-width:none;padding:0}}
+@media (max-width:760px){.sidebar{width:100%;height:auto;position:static;padding:10px 14px}
+  #nav{display:none;max-height:46vh;overflow-y:auto;overscroll-behavior:contain}.sidebar.open #nav{display:block}
+  .nav-item{padding:9px 10px}
+  #q,#glossary-filter{font-size:16px}
+  .quiz-opts label{padding:8px 0;min-height:30px}
+  .quiz-check{padding:10px 18px;min-height:40px}
+  #diag-start{min-height:40px}
+  .card-actions button{min-height:40px}
+  #nav-toggle{display:block;width:100%;padding:8px 10px;margin:4px 0;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:14px;text-align:left;cursor:pointer}
+  .layout{flex-direction:column}.main{padding:20px 18px 64px;max-width:none;width:100%}
+  .page{overflow-wrap:anywhere}.table-wrap{overflow-x:auto;max-width:100%}.page table{display:table;width:max-content;min-width:100%;max-width:none}
+  .page h1,.page h2,.page h3{line-height:1.35}}
+</style>
+<style id="zs-visual-theme">
+/* 知枢 · 深色视觉层 · 只改样式，不改结构
+   适用：知枢多书总入口 / 单书伴侣 / 旧版从零推导页。
+   设计口径：深色底、钴蓝+鲸青、衬线标题、点阵底纹、无玻璃拟态。 */
+
+:root,
+html[data-theme="dark"],
+body[data-theme="dark"] {
+  --bg: #080d1a;
+  --bg-soft: #0b1222;
+  --bg2: #0b1222;
+  --bg3: #16213b;
+  --panel: #101a2f;
+  --panel-2: #16213b;
+  --card: #101a2f;
+  --text: #f1f5ff;
+  --text2: #c7d0e5;
+  --text3: #8494b4;
+  --muted: #8494b4;
+  --border: #253252;
+  --accent: #5c7cff;
+  --accent-strong: #4d6bff;
+  --accent2: #16c7d9;
+  --accent3: #2bd9a5;
+  --accent-soft: #18264a;
+  --ok: #2bd9a5;
+  --bad: #ff7088;
+  --warn: #f5b35c;
+  --danger: #ff7088;
+  --code-bg: #0a1120;
+  --dot: rgba(92, 124, 255, .12);
+  --radius: 10px;
+  --font-display: "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
+  --font-body: "Noto Sans CJK SC", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --ink: #f1f5ff;
+  --ink-2: #c7d0e5;
+  --ink-3: #8494b4;
+  --paper: #080d1a;
+  --paper-2: #101a2f;
+  --wash: #0b1222;
+  --line: #253252;
+  --line-soft: #1b2742;
+}
+
+html[data-theme="light"],
+body[data-theme="light"],
+body[data-theme=""] {
+  --bg: #edf1f8;
+  --bg-soft: #e4eaf5;
+  --bg2: #e4eaf5;
+  --bg3: #dbe4f2;
+  --panel: #f9fbff;
+  --panel-2: #f1f5fc;
+  --card: #f9fbff;
+  --text: #111827;
+  --text2: #26324a;
+  --text3: #5b6b86;
+  --muted: #5b6b86;
+  --border: #c9d4e8;
+  --accent: #3950de;
+  --accent-strong: #2f43c9;
+  --accent2: #0e8fa4;
+  --accent3: #12805f;
+  --accent-soft: #dbe4ff;
+  --ok: #12805f;
+  --bad: #c02a44;
+  --warn: #9a5b00;
+  --danger: #c02a44;
+  --code-bg: #eef2f9;
+  --dot: rgba(57, 80, 222, .10);
+  --ink: #111827;
+  --ink-2: #26324a;
+  --ink-3: #5b6b86;
+  --paper: #edf1f8;
+  --paper-2: #f9fbff;
+  --wash: #e4eaf5;
+  --line: #c9d4e8;
+  --line-soft: #dbe4f2;
+}
+
+html,
+body {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+body {
+  font-family: var(--font-body) !important;
+  background-image: radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 1.2px);
+  background-size: 26px 26px;
+  background-attachment: fixed;
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+h1, h2, h3, h4, h5,
+.page h1, .page h2, .page h3,
+.brand, .hero-title, .title {
+  font-family: var(--font-display) !important;
+  letter-spacing: -.012em;
+}
+
+h1, h2, h3, h4, h5,
+.page h1, .page h2, .page h3 {
+  color: var(--text) !important;
+}
+
+header,
+.topbar,
+.topbar-fixed,
+#topbar,
+.site-header {
+  background: var(--bg) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+header,
+.topbar,
+.topbar-fixed,
+#topbar {
+  box-shadow: 0 1px 0 var(--border);
+}
+
+/* 通用 hero / 页头：旧版单页常用 .header 或 .hero，不是 header 标签 */
+.hero,
+.header,
+.page-header,
+.hero-block {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--border);
+  box-shadow: none !important;
+}
+
+.hero h1,
+.header h1,
+.page-header h1,
+.hero p,
+.header p,
+.page-header p {
+  color: var(--text) !important;
+}
+
+.section-title {
+  border-left-color: var(--accent) !important;
+  color: var(--text) !important;
+}
+
+.stat .num,
+.metric .num,
+.kpi .value {
+  color: var(--accent2) !important;
+}
+
+
+.brand span,
+.sub,
+.meta,
+.muted,
+.text-muted,
+.card .meta,
+.book-card .meta {
+  color: var(--muted) !important;
+}
+
+.sidebar,
+aside.sidebar,
+#sidebar,
+.rail {
+  background: var(--bg-soft) !important;
+  border-color: var(--border) !important;
+}
+
+.main,
+main.main,
+#view,
+.view {
+  background: transparent !important;
+  color: var(--text) !important;
+}
+
+.page,
+.page * {
+  border-color: var(--border);
+}
+
+.page h1 {
+  border-bottom-color: var(--border) !important;
+}
+
+a {
+  color: var(--accent) !important;
+}
+
+a:hover {
+  color: var(--accent2) !important;
+}
+
+.tab,
+.tabs button,
+.tabs .tab,
+.nav-item,
+#theme-btn,
+#nav-toggle,
+button {
+  color: var(--text) !important;
+  background: var(--panel) !important;
+  border-color: var(--border) !important;
+}
+
+.tab:hover,
+.tabs button:hover,
+.nav-item:hover,
+button:hover {
+  background: var(--accent-soft) !important;
+}
+
+.tab.active,
+.tabs .tab.active,
+.nav-item.active,
+button.primary,
+.btn.primary,
+.quiz-check {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+.nav-item.active,
+.tab.active {
+  color: #fff !important;
+}
+
+.nav-sec,
+.nav-label,
+.sidebar .sub {
+  color: var(--muted) !important;
+}
+
+#progress-bar,
+.bar,
+.progress {
+  background: var(--border) !important;
+}
+
+#progress-bar > div,
+#progress-fill,
+.bar > i,
+.progress > i {
+  background: var(--accent) !important;
+}
+
+input,
+select,
+textarea,
+#q,
+#glossary-filter,
+.search,
+.search input {
+  background: var(--bg-soft) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+#q::placeholder,
+#glossary-filter::placeholder {
+  color: var(--text3) !important;
+}
+
+.page table,
+table {
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.page th,
+.page td,
+th,
+td {
+  white-space: nowrap;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+  contain: paint;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrap table {
+  display: table;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  overflow: visible;
+  white-space: normal;
+  table-layout: auto;
+}
+
+@media (min-width: 900px) {
+  .page table,
+  table {
+    display: table;
+    width: 100%;
+    overflow: visible;
+    white-space: normal;
+    table-layout: fixed;
+  }
+  .page th,
+  .page td,
+  th,
+  td {
+    white-space: normal;
+  }
+  .table-wrap table {
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+
+.page th,
+th {
+  background: var(--panel-2) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+.page td,
+td {
+  border-color: var(--border) !important;
+}
+
+.page code,
+code,
+kbd,
+samp {
+  background: var(--code-bg) !important;
+  color: #dbe6ff !important;
+}
+
+html[data-theme="light"] code,
+body[data-theme="light"] code,
+body[data-theme=""] code,
+html[data-theme="light"] .page code,
+body[data-theme="light"] .page code,
+body[data-theme=""] .page code {
+  color: #17223b !important;
+}
+
+.page pre,
+pre {
+  background: var(--code-bg) !important;
+  color: #dbe6ff !important;
+  border: 1px solid var(--border);
+}
+
+html[data-theme="light"] pre,
+body[data-theme="light"] pre,
+body[data-theme=""] pre {
+  color: #17223b !important;
+}
+
+.page blockquote,
+blockquote {
+  background: var(--accent-soft) !important;
+  border-left-color: var(--accent) !important;
+  color: var(--text) !important;
+}
+
+.mermaid,
+.mermaid-hint {
+  background: var(--code-bg) !important;
+  color: var(--muted) !important;
+  border-color: var(--border) !important;
+}
+
+.quiz-item,
+.path-step,
+.book-card,
+.concept-card,
+.pattern-card,
+.term-card,
+.diag-card,
+.search-hit,
+.card,
+.box,
+.panel,
+.fc-front,
+.fc-back,
+details,
+summary {
+  background: var(--panel) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+.book-card:hover,
+.concept-card:hover,
+.quiz-item:hover {
+  border-color: var(--accent) !important;
+}
+
+.quiz-explain,
+.source-badge,
+.glossary-ref,
+.card-counts,
+.source,
+.citation {
+  color: var(--muted) !important;
+  border-color: var(--border) !important;
+}
+
+.quiz-blank,
+.quiz-opts label,
+.quiz-opts label:hover {
+  background: var(--bg-soft) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+.fc-back {
+  background: var(--accent-soft) !important;
+}
+
+.tag,
+.pill,
+.badge {
+  background: var(--panel-2) !important;
+  border-color: var(--border) !important;
+  color: var(--text2) !important;
+}
+
+.empty {
+  color: var(--muted) !important;
+}
+
+.card .icon:empty,
+.icon-label:empty {
+  display: none !important;
+}
+
+* {
+  scrollbar-color: #2a3a5f transparent;
+  scrollbar-width: thin;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* 深色主题下代码高亮不要被旧样式压成白底 */
+html[data-theme="dark"] .page pre,
+body[data-theme="dark"] .page pre {
+  background: var(--code-bg) !important;
+}
+
+/* 旧版页面里的白色卡片兜底 */
+html[data-theme="dark"] .page .card,
+body[data-theme="dark"] .page .card {
+  background: var(--panel) !important;
+}
+
+@media (max-width: 820px) {
+  body {
+    background-size: 22px 22px;
+    font-size: 15.5px;
+  }
+  header,
+  .topbar,
+  .topbar-fixed {
+    background: var(--bg) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .001ms !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media print {
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  body {
+    background-image: none !important;
+  }
+}
+
+/* 多书总入口：窄屏下书籍标签横滑，不再堆成四五行 */
+@media (max-width: 720px) {
+  header .tabs,
+  .tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  header .tabs > *,
+  .tabs > * {
+    flex: 0 0 auto;
+  }
+
+  .tabs::-webkit-scrollbar {
+    height: 4px;
+  }
+  .tabs::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+  }
+}
+
+
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>【幻想数学大战】·第15卷·数学的极限</h1>
+    <div class="sub">原文导航版：按真实目录与原文定位句搭建的自学页</div>
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+    <div class="sub" id="progress-label">进度 0%</div>
+    <input id="q" type="search" placeholder="搜索章节 / 概念 / 术语 / 全文…">
+    <nav id="nav"></nav>
+  </aside>
+  <main class="main">
+    <div class="topbar"><button id="progress-export">⬇ 导出进度</button><button id="progress-import">⬆ 导入进度</button><button id="theme-btn">🌙 深色</button><input type="file" id="progress-file" accept="application/json" hidden></div>
+    <div id="view" class="page"></div>
+  </main>
+</div>
+<script>
+const DATA = {"manifest": {"slug": "auto-幻想数学大战-第15卷-数学的极限-152", "title": "【幻想数学大战】·第15卷·数学的极限", "subtitle": "原文导航版：按真实目录与原文定位句搭建的自学页", "book": {"title": "【幻想数学大战】·第15卷·数学的极限", "author": "见原书", "source": ["【幻想数学大战】·第15卷·数学的极限.pdf"]}, "audience": "有基础到进阶", "goal": "按章节顺序建立全书地图，并用原文定位句完成第一轮通读", "learningPath": [{"step": "01", "title": "第 1 章：第 1 部分（第 1–42 页）", "chapterIds": ["ch01"], "checkpoint": "能复述本章 2 条要点"}, {"step": "02", "title": "第 2 章：第 2 部分（第 43–85 页）", "chapterIds": ["ch02"], "checkpoint": "能复述本章 2 条要点"}, {"step": "03", "title": "第 3 章：第 3 部分（第 86–128 页）", "chapterIds": ["ch03"], "checkpoint": "能复述本章 2 条要点"}, {"step": "04", "title": "第 4 章：第 4 部分（第 129–172 页）", "chapterIds": ["ch04"], "checkpoint": "能复述本章 2 条要点"}], "chapters": [{"id": "ch01", "title": "第 1 章：第 1 部分（第 1–42 页）", "file": "chapters/ch01.md", "difficulty": 2, "source": {"file": "【幻想数学大战】·第15卷·数学的极限.pdf", "page": 1}, "prerequisites": []}, {"id": "ch02", "title": "第 2 章：第 2 部分（第 43–85 页）", "file": "chapters/ch02.md", "difficulty": 2, "source": {"file": "【幻想数学大战】·第15卷·数学的极限.pdf", "page": 43}, "prerequisites": ["ch01"]}, {"id": "ch03", "title": "第 3 章：第 3 部分（第 86–128 页）", "file": "chapters/ch03.md", "difficulty": 2, "source": {"file": "【幻想数学大战】·第15卷·数学的极限.pdf", "page": 86}, "prerequisites": ["ch02"]}, {"id": "ch04", "title": "第 4 章：第 4 部分（第 129–172 页）", "file": "chapters/ch04.md", "difficulty": 2, "source": {"file": "【幻想数学大战】·第15卷·数学的极限.pdf", "page": 129}, "prerequisites": ["ch03"]}], "concepts": [], "glossary": [], "patterns": {"file": "patterns.md"}, "cheatsheet": {"file": "cheatsheet.md"}, "quizzes": [], "flashcards": []}, "pages": {"ch01": {"html": "<div class=\"source-badge\">📖 出处：【幻想数学大战】·第15卷·数学的极限.pdf · p.1<\/div><h1>第 1 章：第 1 部分（第 1–42 页）<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：1.5 小时 | <strong>前置<\/strong>：上一章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ol><li>\n说出本章讨论的核心问题；\n<\/li><li>\n列出 2–3 个关键结论；\n<\/li><li>\n用本章概念解释一个例子。\n<\/ol>\n<h2>一句话核心<\/h2>\n<p>本章从第 1 页开始，主题是「第 1 部分（第 1–42 页）」。该章以扫描页为主，文本层不可用，建议直接按页阅读并在笔记里写下三个问题。<\/p>\n<h2>原文脉络<\/h2>\n<ul><li>\n起始页：第 1 页\n<\/li><li>\n建议读法：先看章节标题与图表，再逐段读；每读完一节，用自己的话写一句摘要。\n<\/ul>\n<h2>自测题（答案）<\/h2>\n<ol><li>\n本章标题是？\n<\/ol>\n<h2>复习锚点<\/h2>\n<ul><li>\n章节主题：第 1 部分（第 1–42 页）\n<\/li><li>\n起始页：1\n<\/ul>", "kind": "chapter", "title": "第 1 章：第 1 部分（第 1–42 页）"}, "ch02": {"html": "<div class=\"source-badge\">📖 出处：【幻想数学大战】·第15卷·数学的极限.pdf · p.43<\/div><div class=\"prereq-bar\">⬅ 前置：<span class=\"prereq-hard\"><span class=\"prereq-tag\">必<\/span> <a href=\"#/chapter/ch01\">第 1 章：第 1 部分（第 1–42 页）<\/a><\/span><\/div><h1>第 2 章：第 2 部分（第 43–85 页）<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：1.5 小时 | <strong>前置<\/strong>：上一章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ol><li>\n说出本章讨论的核心问题；\n<\/li><li>\n列出 2–3 个关键结论；\n<\/li><li>\n用本章概念解释一个例子。\n<\/ol>\n<h2>一句话核心<\/h2>\n<p>本章从第 43 页开始，主题是「第 2 部分（第 43–85 页）」。该章以扫描页为主，文本层不可用，建议直接按页阅读并在笔记里写下三个问题。<\/p>\n<h2>原文脉络<\/h2>\n<ul><li>\n起始页：第 43 页\n<\/li><li>\n建议读法：先看章节标题与图表，再逐段读；每读完一节，用自己的话写一句摘要。\n<\/ul>\n<h2>自测题（答案）<\/h2>\n<ol><li>\n本章标题是？\n<\/ol>\n<h2>复习锚点<\/h2>\n<ul><li>\n章节主题：第 2 部分（第 43–85 页）\n<\/li><li>\n起始页：43\n<\/ul>", "kind": "chapter", "title": "第 2 章：第 2 部分（第 43–85 页）"}, "ch03": {"html": "<div class=\"source-badge\">📖 出处：【幻想数学大战】·第15卷·数学的极限.pdf · p.86<\/div><div class=\"prereq-bar\">⬅ 前置：<span class=\"prereq-hard\"><span class=\"prereq-tag\">必<\/span> <a href=\"#/chapter/ch02\">第 2 章：第 2 部分（第 43–85 页）<\/a><\/span><\/div><h1>第 3 章：第 3 部分（第 86–128 页）<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：1.5 小时 | <strong>前置<\/strong>：上一章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ol><li>\n说出本章讨论的核心问题；\n<\/li><li>\n列出 2–3 个关键结论；\n<\/li><li>\n用本章概念解释一个例子。\n<\/ol>\n<h2>一句话核心<\/h2>\n<p>本章从第 86 页开始，主题是「第 3 部分（第 86–128 页）」。该章以扫描页为主，文本层不可用，建议直接按页阅读并在笔记里写下三个问题。<\/p>\n<h2>原文脉络<\/h2>\n<ul><li>\n起始页：第 86 页\n<\/li><li>\n建议读法：先看章节标题与图表，再逐段读；每读完一节，用自己的话写一句摘要。\n<\/ul>\n<h2>自测题（答案）<\/h2>\n<ol><li>\n本章标题是？\n<\/ol>\n<h2>复习锚点<\/h2>\n<ul><li>\n章节主题：第 3 部分（第 86–128 页）\n<\/li><li>\n起始页：86\n<\/ul>", "kind": "chapter", "title": "第 3 章：第 3 部分（第 86–128 页）"}, "ch04": {"html": "<div class=\"source-badge\">📖 出处：【幻想数学大战】·第15卷·数学的极限.pdf · p.129<\/div><div class=\"prereq-bar\">⬅ 前置：<span class=\"prereq-hard\"><span class=\"prereq-tag\">必<\/span> <a href=\"#/chapter/ch03\">第 3 章：第 3 部分（第 86–128 页）<\/a><\/span><\/div><h1>第 4 章：第 4 部分（第 129–172 页）<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：1.5 小时 | <strong>前置<\/strong>：上一章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ol><li>\n说出本章讨论的核心问题；\n<\/li><li>\n列出 2–3 个关键结论；\n<\/li><li>\n用本章概念解释一个例子。\n<\/ol>\n<h2>一句话核心<\/h2>\n<p>本章从第 129 页开始，主题是「第 4 部分（第 129–172 页）」。该章以扫描页为主，文本层不可用，建议直接按页阅读并在笔记里写下三个问题。<\/p>\n<h2>原文脉络<\/h2>\n<ul><li>\n起始页：第 129 页\n<\/li><li>\n建议读法：先看章节标题与图表，再逐段读；每读完一节，用自己的话写一句摘要。\n<\/ul>\n<h2>自测题（答案）<\/h2>\n<ol><li>\n本章标题是？\n<\/ol>\n<h2>复习锚点<\/h2>\n<ul><li>\n章节主题：第 4 部分（第 129–172 页）\n<\/li><li>\n起始页：129\n<\/ul>", "kind": "chapter", "title": "第 4 章：第 4 部分（第 129–172 页）"}, "__path__": {"html": "<h1>学习路径<\/h1><p>按推荐顺序学习；每步通过检查点（自测题）后再继续。<\/p><ol class='path-list'><li class='path-step' id='path-01'><strong>步骤 01：第 1 章：第 1 部分（第 1–42 页）<\/strong><br>阅读：<a href=\"#/chapter/ch01\">第 1 章：第 1 部分（第 1–42 页）<\/a><br>检查点：能复述本章 2 条要点<\/li><li class='path-step' id='path-02'><strong>步骤 02：第 2 章：第 2 部分（第 43–85 页）<\/strong><br>阅读：<a href=\"#/chapter/ch02\">第 2 章：第 2 部分（第 43–85 页）<\/a><br>检查点：能复述本章 2 条要点<\/li><li class='path-step' id='path-03'><strong>步骤 03：第 3 章：第 3 部分（第 86–128 页）<\/strong><br>阅读：<a href=\"#/chapter/ch03\">第 3 章：第 3 部分（第 86–128 页）<\/a><br>检查点：能复述本章 2 条要点<\/li><li class='path-step' id='path-04'><strong>步骤 04：第 4 章：第 4 部分（第 129–172 页）<\/strong><br>阅读：<a href=\"#/chapter/ch04\">第 4 章：第 4 部分（第 129–172 页）<\/a><br>检查点：能复述本章 2 条要点<\/li><\/ol><p>进度：<span id='path-progress-label'>0/0<\/span><\/p>", "kind": "path", "title": "学习路径"}, "__graph__": {"html": "<h1>🕸 知识图谱<\/h1><p>节点是概念，边是先修关系。拖拽节点、滚轮缩放，点击节点跳转到对应概念页。<\/p><div id=\"graph-container\" style=\"height:520px;border:1px solid var(--border);border-radius:10px;background:var(--panel)\"><\/div><p class=\"sub\">红线 = 必学前置 · 灰线 = 建议先看 · 蓝线 = 拓展阅读<\/p>", "kind": "graph", "title": "知识图谱"}, "__quiz_all__": {"html": "<p>（无综合题）<\/p>", "kind": "quiz", "title": "综合测验"}, "__cards__": {"html": "<h1>抽认卡<\/h1><p>点击卡片翻面；判断「认识 / 不熟」以记录复习状态。<\/p><div class='card-controls'><label>按章节筛选：<select id='card-filter'><option value=''>全部<\/option><\/select><\/label><span class='card-counts'>认识 <b id='card-known'>0<\/b> · 不熟 <b id='card-again'>0<\/b> · 剩余 <b id='card-left'>0<\/b><\/span><\/div><div id='card-stage'><div class='flashcard' id='flashcard'><div class='fc-inner'><div class='fc-front'><\/div><div class='fc-back'><\/div><\/div><\/div><\/div><div class='card-actions'><button id='card-again-btn'>不熟<\/button><button id='card-known-btn'>认识<\/button><\/div>", "kind": "cards", "title": "抽认卡"}, "__glossary__": {"html": "<h1>术语表<\/h1><input id='glossary-filter' type='search' placeholder='筛选术语…'><ul id='glossary-list'><\/ul>", "kind": "glossary", "title": "术语表"}, "__diagnosis__": {"html": "<h1>诊断测试<\/h1><p class='empty'>本书暂无测验题，无法诊断。<\/p>", "kind": "diagnosis", "title": "诊断测试"}, "__patterns__": {"html": "<h1>模式库<\/h1>\n<h2>模式 1：先读定位句<\/h2>\n<p>每章先读 3–4 条高信息密度句，再回到展开。<\/p>\n<h2>模式 2：术语回原文<\/h2>\n<p>遇到术语，回到首次出现页读完整段落，不背孤立定义。<\/p>", "kind": "模式库", "title": "模式库"}, "__cheatsheet__": {"html": "<h1>速查表<\/h1>\n<ul><li>\n章节顺序即阅读顺序\n<\/li><li>\n术语表用于回查页码\n<\/li><li>\n自测题为原文填空，答不出就回读该页\n<\/ul>", "kind": "速查表", "title": "速查表"}}, "base_dir": "/home/user/Doubao/chats/38456942247866370/build/auto/幻想数学大战-第15卷-数学的极限-152", "nav": [{"label": "学习路径", "href": "#/path"}, {"label": "🕸 知识图谱", "href": "#/graph"}, {"label": "🩺 诊断测试", "href": "#/diagnosis"}, {"label": "章节", "children": [{"label": "第 1 章：第 1 部分（第 1–42 页）", "href": "#/chapter/ch01"}, {"label": "第 2 章：第 2 部分（第 43–85 页）", "href": "#/chapter/ch02"}, {"label": "第 3 章：第 3 部分（第 86–128 页）", "href": "#/chapter/ch03"}, {"label": "第 4 章：第 4 部分（第 129–172 页）", "href": "#/chapter/ch04"}]}, {"label": "测验", "children": [{"label": "综合测验", "href": "#/quiz/all"}, {"label": "测验：第 1 章：第 1 部分（第 1–42 页）", "href": "#/quiz/ch01"}, {"label": "测验：第 2 章：第 2 部分（第 43–85 页）", "href": "#/quiz/ch02"}, {"label": "测验：第 3 章：第 3 部分（第 86–128 页）", "href": "#/quiz/ch03"}, {"label": "测验：第 4 章：第 4 部分（第 129–172 页）", "href": "#/quiz/ch04"}]}, {"label": "抽认卡", "href": "#/cards"}, {"label": "术语表", "href": "#/glossary"}, {"label": "模式库", "href": "#/patterns"}, {"label": "速查表", "href": "#/cheatsheet"}], "rendered": {"ch01": "<div class=\"source-badge\">📖 出处：【幻想数学大战】·第15卷·数学的极限.pdf · p.1<\/div><h1>第 1 章：第 1 部分（第 1–42 页）<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：1.5 小时 | <strong>前置<\/strong>：上一章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ol><li>\n说出本章讨论的核心问题；\n<\/li><li>\n列出 2–3 个关键结论；\n<\/li><li>\n用本章概念解释一个例子。\n<\/ol>\n<h2>一句话核心<\/h2>\n<p>本章从第 1 页开始，主题是「第 1 部分（第 1–42 页）」。该章以扫描页为主，文本层不可用，建议直接按页阅读并在笔记里写下三个问题。<\/p>\n<h2>原文脉络<\/h2>\n<ul><li>\n起始页：第 1 页\n<\/li><li>\n建议读法：先看章节标题与图表，再逐段读；每读完一节，用自己的话写一句摘要。\n<\/ul>\n<h2>自测题（答案）<\/h2>\n<ol><li>\n本章标题是？\n<\/ol>\n<h2>复习锚点<\/h2>\n<ul><li>\n章节主题：第 1 部分（第 1–42 页）\n<\/li><li>\n起始页：1\n<\/ul>", "ch02": "<div class=\"source-badge\">📖 出处：【幻想数学大战】·第15卷·数学的极限.pdf · p.43<\/div><div class=\"prereq-bar\">⬅ 前置：<span class=\"prereq-hard\"><span class=\"prereq-tag\">必<\/span> <a href=\"#/chapter/ch01\">第 1 章：第 1 部分（第 1–42 页）<\/a><\/span><\/div><h1>第 2 章：第 2 部分（第 43–85 页）<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：1.5 小时 | <strong>前置<\/strong>：上一章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ol><li>\n说出本章讨论的核心问题；\n<\/li><li>\n列出 2–3 个关键结论；\n<\/li><li>\n用本章概念解释一个例子。\n<\/ol>\n<h2>一句话核心<\/h2>\n<p>本章从第 43 页开始，主题是「第 2 部分（第 43–85 页）」。该章以扫描页为主，文本层不可用，建议直接按页阅读并在笔记里写下三个问题。<\/p>\n<h2>原文脉络<\/h2>\n<ul><li>\n起始页：第 43 页\n<\/li><li>\n建议读法：先看章节标题与图表，再逐段读；每读完一节，用自己的话写一句摘要。\n<\/ul>\n<h2>自测题（答案）<\/h2>\n<ol><li>\n本章标题是？\n<\/ol>\n<h2>复习锚点<\/h2>\n<ul><li>\n章节主题：第 2 部分（第 43–85 页）\n<\/li><li>\n起始页：43\n<\/ul>", "ch03": "<div class=\"source-badge\">📖 出处：【幻想数学大战】·第15卷·数学的极限.pdf · p.86<\/div><div class=\"prereq-bar\">⬅ 前置：<span class=\"prereq-hard\"><span class=\"prereq-tag\">必<\/span> <a href=\"#/chapter/ch02\">第 2 章：第 2 部分（第 43–85 页）<\/a><\/span><\/div><h1>第 3 章：第 3 部分（第 86–128 页）<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：1.5 小时 | <strong>前置<\/strong>：上一章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ol><li>\n说出本章讨论的核心问题；\n<\/li><li>\n列出 2–3 个关键结论；\n<\/li><li>\n用本章概念解释一个例子。\n<\/ol>\n<h2>一句话核心<\/h2>\n<p>本章从第 86 页开始，主题是「第 3 部分（第 86–128 页）」。该章以扫描页为主，文本层不可用，建议直接按页阅读并在笔记里写下三个问题。<\/p>\n<h2>原文脉络<\/h2>\n<ul><li>\n起始页：第 86 页\n<\/li><li>\n建议读法：先看章节标题与图表，再逐段读；每读完一节，用自己的话写一句摘要。\n<\/ul>\n<h2>自测题（答案）<\/h2>\n<ol><li>\n本章标题是？\n<\/ol>\n<h2>复习锚点<\/h2>\n<ul><li>\n章节主题：第 3 部分（第 86–128 页）\n<\/li><li>\n起始页：86\n<\/ul>", "ch04": "<div class=\"source-badge\">📖 出处：【幻想数学大战】·第15卷·数学的极限.pdf · p.129<\/div><div class=\"prereq-bar\">⬅ 前置：<span class=\"prereq-hard\"><span class=\"prereq-tag\">必<\/span> <a href=\"#/chapter/ch03\">第 3 章：第 3 部分（第 86–128 页）<\/a><\/span><\/div><h1>第 4 章：第 4 部分（第 129–172 页）<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：1.5 小时 | <strong>前置<\/strong>：上一章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ol><li>\n说出本章讨论的核心问题；\n<\/li><li>\n列出 2–3 个关键结论；\n<\/li><li>\n用本章概念解释一个例子。\n<\/ol>\n<h2>一句话核心<\/h2>\n<p>本章从第 129 页开始，主题是「第 4 部分（第 129–172 页）」。该章以扫描页为主，文本层不可用，建议直接按页阅读并在笔记里写下三个问题。<\/p>\n<h2>原文脉络<\/h2>\n<ul><li>\n起始页：第 129 页\n<\/li><li>\n建议读法：先看章节标题与图表，再逐段读；每读完一节，用自己的话写一句摘要。\n<\/ul>\n<h2>自测题（答案）<\/h2>\n<ol><li>\n本章标题是？\n<\/ol>\n<h2>复习锚点<\/h2>\n<ul><li>\n章节主题：第 4 部分（第 129–172 页）\n<\/li><li>\n起始页：129\n<\/ul>", "__path__": "<h1>学习路径<\/h1><p>按推荐顺序学习；每步通过检查点（自测题）后再继续。<\/p><ol class='path-list'><li class='path-step' id='path-01'><strong>步骤 01：第 1 章：第 1 部分（第 1–42 页）<\/strong><br>阅读：<a href=\"#/chapter/ch01\">第 1 章：第 1 部分（第 1–42 页）<\/a><br>检查点：能复述本章 2 条要点<\/li><li class='path-step' id='path-02'><strong>步骤 02：第 2 章：第 2 部分（第 43–85 页）<\/strong><br>阅读：<a href=\"#/chapter/ch02\">第 2 章：第 2 部分（第 43–85 页）<\/a><br>检查点：能复述本章 2 条要点<\/li><li class='path-step' id='path-03'><strong>步骤 03：第 3 章：第 3 部分（第 86–128 页）<\/strong><br>阅读：<a href=\"#/chapter/ch03\">第 3 章：第 3 部分（第 86–128 页）<\/a><br>检查点：能复述本章 2 条要点<\/li><li class='path-step' id='path-04'><strong>步骤 04：第 4 章：第 4 部分（第 129–172 页）<\/strong><br>阅读：<a href=\"#/chapter/ch04\">第 4 章：第 4 部分（第 129–172 页）<\/a><br>检查点：能复述本章 2 条要点<\/li><\/ol><p>进度：<span id='path-progress-label'>0/0<\/span><\/p>", "__graph__": "<h1>🕸 知识图谱<\/h1><p>节点是概念，边是先修关系。拖拽节点、滚轮缩放，点击节点跳转到对应概念页。<\/p><div id=\"graph-container\" style=\"height:520px;border:1px solid var(--border);border-radius:10px;background:var(--panel)\"><\/div><p class=\"sub\">红线 = 必学前置 · 灰线 = 建议先看 · 蓝线 = 拓展阅读<\/p>", "__quiz_all__": "<p>（无综合题）<\/p>", "__cards__": "<h1>抽认卡<\/h1><p>点击卡片翻面；判断「认识 / 不熟」以记录复习状态。<\/p><div class='card-controls'><label>按章节筛选：<select id='card-filter'><option value=''>全部<\/option><\/select><\/label><span class='card-counts'>认识 <b id='card-known'>0<\/b> · 不熟 <b id='card-again'>0<\/b> · 剩余 <b id='card-left'>0<\/b><\/span><\/div><div id='card-stage'><div class='flashcard' id='flashcard'><div class='fc-inner'><div class='fc-front'><\/div><div class='fc-back'><\/div><\/div><\/div><\/div><div class='card-actions'><button id='card-again-btn'>不熟<\/button><button id='card-known-btn'>认识<\/button><\/div>", "__glossary__": "<h1>术语表<\/h1><input id='glossary-filter' type='search' placeholder='筛选术语…'><ul id='glossary-list'><\/ul>", "__diagnosis__": "<h1>诊断测试<\/h1><p class='empty'>本书暂无测验题，无法诊断。<\/p>", "__patterns__": "<h1>模式库<\/h1>\n<h2>模式 1：先读定位句<\/h2>\n<p>每章先读 3–4 条高信息密度句，再回到展开。<\/p>\n<h2>模式 2：术语回原文<\/h2>\n<p>遇到术语，回到首次出现页读完整段落，不背孤立定义。<\/p>", "__cheatsheet__": "<h1>速查表<\/h1>\n<ul><li>\n章节顺序即阅读顺序\n<\/li><li>\n术语表用于回查页码\n<\/li><li>\n自测题为原文填空，答不出就回读该页\n<\/ul>"}};
+const pages = DATA.rendered;
+const manifest = DATA.manifest;
+const SYN_GROUPS = [["定义", "含义", "释义", "概念"], ["例题", "算例", "示例", "例子", "案例"], ["习题", "题目", "练习", "测验", "自测"], ["推导", "证明", "论证", "演算"], ["步骤", "流程", "过程", "环节"], ["性质", "特性", "特点", "属性"], ["公式", "表达式", "式子"], ["定理", "定律", "法则", "准则"], ["图像", "图形", "图示", "曲线"], ["计算", "求解", "算出", "求值"], ["平均值", "均值", "平均数"], ["误差", "偏差", "偏离"], ["函数", "映射", "对应关系"], ["导数", "变化率", "切线斜率", "微商"], ["原函数", "不定积分", "反导数"], ["概率", "几率", "可能性"]];
+const SOURCES = {};
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SLUG = manifest.slug || 'book';
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(SLUG+':'+k)||'null') }catch(e){ return null } },
+  set(k,v){ try{ localStorage.setItem(SLUG+':'+k, JSON.stringify(v)) }catch(e){} }
+};
+const ZS_VERSION = '1.9.0';
+/* ---------- 进度导出 / 导入（跨设备） ---------- */
+function exportProgress(){
+  const data = {};
+  for(let i=0;i<localStorage.length;i++){
+    const k = localStorage.key(i);
+    if(k && k.indexOf(SLUG+':')===0) data[k]=localStorage.getItem(k);
+  }
+  const payload = {app:'zhishu', skillVersion:ZS_VERSION, kind:'companion', exportedAt:new Date().toISOString(), prefix:SLUG+':', data};
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (SLUG||'book')+'-progress-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+}
+function importProgress(file){
+  const fr = new FileReader();
+  fr.onload = () => {
+    try{
+      const p = JSON.parse(fr.result);
+      if(!p || p.app!=='zhishu' || !p.data || typeof p.data!=='object') throw new Error('不是知枢进度文件');
+      let n = 0;
+      Object.keys(p.data).forEach(k=>{ if(k.indexOf(SLUG+':')===0){ localStorage.setItem(k, p.data[k]); n++; } });
+      if(!n){ alert('这个文件里没有属于本书的进度（slug 不一致）'); return; }
+      alert('已导入 '+n+' 条进度，页面将刷新'); location.reload();
+    }catch(e){ alert('导入失败：'+e.message); }
+  };
+  fr.readAsText(file);
+}
+let state = { visited: store.get('visited')||[], quiz: store.get('quiz')||{}, cards: store.get('cards')||{}, mastery: store.get('mastery')||{} };
+
+/* ---------- 导航 ---------- */
+function renderNav(){
+  const nav = $('#nav'); nav.innerHTML='';
+  const build = items => items.forEach(it=>{
+    if(it.children){
+      const sec=document.createElement('div'); sec.className='nav-sec'; sec.textContent=it.label; nav.appendChild(sec);
+      it.children.forEach(c=>{
+        const a=document.createElement('a'); a.className='nav-item'; a.href=c.href; a.textContent=c.label;
+        const id=routeId(c.href);
+        if(state.visited.includes(id)) a.innerHTML = esc(c.label)+' <span class="done">✓</span>';
+        nav.appendChild(a);
+      });
+    }else{
+      const a=document.createElement('a'); a.className='nav-item'; a.href=it.href; a.textContent=it.label;
+      const id=routeId(it.href);
+      if(state.visited.includes(id)) a.innerHTML = esc(it.label)+' <span class="done">✓</span>';
+      nav.appendChild(a);
+    }
+  });
+  build(DATA.nav);
+  updateProgress();
+}
+function routeId(href){ return href.replace('#/',''); }
+
+/* ---------- 路由 ---------- */
+function routeIdFromHash(){
+  let h = location.hash.replace(/^#\//,'');
+  if(!h) return 'path';
+  if(h==='path') return 'path';
+  if(h==='diagnosis') return 'diagnosis';
+  const m = h.match(/^(chapter|concept)\/(.+)$/);
+  if(m) return m[1]+'/'+m[2];
+  return h;
+}
+function showPage(rid){
+  let id;
+  if(rid==='path') id='__path__';
+  else if(rid==='diagnosis') id='__diagnosis__';
+  else if(rid==='graph') id='__graph__';
+  else if(rid.startsWith('quiz/')) id='__quiz_'+rid.split('/')[1]+'__';
+  else if(rid==='cards') id='__cards__';
+  else if(rid==='glossary') id='__glossary__';
+  else if(rid==='patterns') id='__patterns__';
+  else if(rid==='cheatsheet') id='__cheatsheet__';
+  else if(rid.startsWith('chapter/')) id=rid.split('/')[1];
+  else if(rid.startsWith('concept/')) id=rid.split('/')[1];
+  else id=rid;
+  const html = pages[id] || '<div class="empty">页面不存在</div>';
+  $('#view').innerHTML = html;
+  $$('.nav-item').forEach(a=>a.classList.toggle('active', routeId(a.getAttribute('href'))===rid));
+  if(!state.visited.includes(rid) && (rid.startsWith('chapter/')||rid.startsWith('concept/'))){
+    state.visited.push(rid); store.set('visited', state.visited); renderNav();
+  }
+  window.scrollTo(0,0);
+  if(rid==='cards') initCards();
+  if(rid==='glossary') initGlossary();
+  if(rid.startsWith('quiz')) initQuizzes(rid);
+  if(rid==='diagnosis') initDiagnosis();
+  if(rid==='graph') initGraph();
+  if(id==='__path__') updatePath();
+  renderMath();
+  renderMermaid();
+  applyPendingHighlight();
+}
+
+/* ---------- KaTeX 渲染（多源回退） ---------- */
+let katexLoading = false, katexReady = false;
+function renderMath(){
+  const hasMath = document.querySelector('.katex-inline, .katex-block');
+  if(!hasMath) return;
+  if(typeof ZHISHU_OFFLINE !== 'undefined' && ZHISHU_OFFLINE && typeof katex === 'undefined') return;
+  if(typeof katex !== 'undefined'){ doRenderMath(); return; }
+  if(katexReady){ doRenderMath(); return; }
+  if(katexLoading) return;
+  katexLoading = true;
+  const cssUrls = [
+    'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css',
+    'https://registry.npmmirror.com/katex/0.16.9/files/dist/katex.min.css',
+    'https://unpkg.com/katex@0.16.9/dist/katex.min.css'
+  ];
+  const jsUrls = [
+    'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js',
+    'https://registry.npmmirror.com/katex/0.16.9/files/dist/katex.min.js',
+    'https://unpkg.com/katex@0.16.9/dist/katex.min.js'
+  ];
+  let ci = 0, ji = 0;
+  const tryCss = () => {
+    if(ci >= cssUrls.length) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet'; link.href = cssUrls[ci++];
+    link.onload = tryJs; link.onerror = () => { link.remove(); tryCss(); };
+    document.head.appendChild(link);
+  };
+  const tryJs = () => {
+    if(ji >= jsUrls.length){ katexLoading = false; return; }
+    const s = document.createElement('script');
+    s.src = jsUrls[ji++];
+    s.onload = () => { katexReady = true; katexLoading = false; doRenderMath(); };
+    s.onerror = () => { s.remove(); tryJs(); };
+    document.head.appendChild(s);
+  };
+  tryCss();
+  tryJs();
+}
+function doRenderMath(){
+  if(typeof katex === 'undefined') return;
+  // 行内公式：.katex-inline 里的内容
+  $$('.katex-inline').forEach(el=>{
+    try{ katex.render(el.textContent, el, {throwOnError:false}); }catch(e){}
+  });
+  // 块级公式：.katex-block 里的内容
+  $$('.katex-block').forEach(el=>{
+    try{ katex.render(el.textContent, el, {displayMode:true, throwOnError:false}); }catch(e){}
+  });
+}
+// 公式内容预处理：把 < 后跟字母的位置转成 &lt;，避免被 HTML 解析器当标签吃掉
+// （这是 first-principles-derivation 踩过的坑：$m<n$ 会变成残留 $m）
+function sanitizeMathHTML(){
+  $$('.katex-inline, .katex-block').forEach(el=>{
+    el.innerHTML = el.innerHTML.replace(/<([a-zA-Z])/g, '&lt;$1');
+  });
+}
+
+/* ---------- 进度 ---------- */
+function updateProgress(){
+  const chs = (manifest.chapters||[]).length;
+  const done = (manifest.chapters||[]).filter(c=>state.visited.includes('chapter/'+c.id)).length;
+  const pct = chs? Math.round(done/chs*100) : 0;
+  $('#progress-fill').style.width = pct+'%';
+  $('#progress-label').textContent = `进度 ${pct}% · 已学 ${done}/${chs} 章`;
+}
+function updatePath(){
+  const steps = manifest.learningPath||[];
+  const passed = steps.filter(s=>(s.chapterIds||[]).every(c=>state.visited.includes('chapter/'+c))).length;
+  const lbl = document.getElementById('path-progress-label');
+  if(lbl) lbl.textContent = `${passed}/${steps.length} 步`;
+  $$('.path-step').forEach(el=>{
+    const step = el.id.replace('path-','');
+    const s = (manifest.learningPath||[]).find(x=>x.step===step);
+    if(s && (s.chapterIds||[]).every(c=>state.visited.includes('chapter/'+c))){
+      el.classList.add('passed');
+      const lbl = el.querySelector('.checkpoint-ok'); if(!lbl){ const sp=document.createElement('span'); sp.className='done'; sp.textContent=' ✓ 已完成'; el.appendChild(sp); }
+    }
+  });
+}
+
+/* ---------- 概念/章节依赖查找（用于诊断倒推） ---------- */
+function findConcept(id){ return (manifest.concepts||[]).find(c=>c.id===id); }
+function findChapter(id){ return (manifest.chapters||[]).find(c=>c.id===id); }
+function getPrereqs(node){
+  if(!node) return [];
+  return node.prerequisites || node.prereqs || [];
+}
+/**
+ * 答错倒推：从错题关联的概念/章节出发，沿 prerequisites 回溯，
+ * 返回一串"你可能需要先补的"节点，带跳转链接。
+ */
+function traceBack(startConceptId, startChapterId){
+  const visited = new Set();
+  const chain = [];
+  const queue = [];
+  if(startConceptId){ const c = findConcept(startConceptId); if(c) queue.push({node:c, kind:'concept'}); }
+  if(startChapterId){ const c = findChapter(startChapterId); if(c) queue.push({node:c, kind:'chapter'}); }
+  while(queue.length && chain.length < 6){
+    const {node, kind} = queue.shift();
+    if(visited.has(node.id)) continue;
+    visited.add(node.id);
+    chain.push({node, kind});
+    (getPrereqs(node)||[]).forEach(pid=>{
+      const cn = findConcept(pid); if(cn){ queue.push({node:cn, kind:'concept'}); return; }
+      const ch = findChapter(pid); if(ch) queue.push({node:ch, kind:'chapter'});
+    });
+  }
+  return chain;
+}
+
+/* ---------- 测验（带倒推） ---------- */
+function initQuizzes(rid){
+  $$('.quiz-item').forEach(item=>{
+    const btn = item.querySelector('.quiz-check');
+    if(!btn || item.dataset.inited){ return }
+    item.dataset.inited='1';
+    btn.addEventListener('click', ()=>{
+      const qid = item.dataset.qid; const type = item.dataset.type;
+      const q = (manifest.quizzes||[]).find(x=>x.id===qid); if(!q) return;
+      let user, correct=false, fb;
+      if(type==='single'){
+        const sel = item.querySelector('input:checked');
+        user = sel? parseInt(sel.value) : null;
+        correct = user===q.answer;
+        fb = correct?'✓ 正确':'✗ 错误'+(user==null?'（未作答）':'');
+      } else if(type==='multi'){
+        user = Array.from(item.querySelectorAll('input:checked')).map(i=>parseInt(i.value)).sort();
+        const ans = Array.isArray(q.answer)? q.answer.slice().sort(): [q.answer];
+        correct = user.length>0 && JSON.stringify(user)===JSON.stringify(ans);
+        fb = correct?'✓ 正确':'✗ 错误';
+      } else if(type==='blank'){
+        const v = (item.querySelector('.quiz-blank').value||'').trim().toLowerCase();
+        const a = String(q.answer).trim().toLowerCase();
+        correct = v===a;
+        fb = correct?'✓ 正确':'✗ 错误'+(v?'':'（未作答）');
+      }
+      item.querySelectorAll('input:checked').forEach(i=>{
+        const val=parseInt(i.value);
+        i.parentElement.style.color = (Array.isArray(q.answer)? q.answer.includes(val) : val===q.answer) ? 'var(--ok)' : 'var(--bad)';
+      });
+      const feed = item.querySelector('.quiz-feedback');
+      feed.className = 'quiz-feedback '+(correct?'fb-ok':'fb-bad');
+      feed.textContent = fb;
+      let ex = item.querySelector('.quiz-explain');
+      if(!ex){ ex=document.createElement('div'); ex.className='quiz-explain'; item.appendChild(ex); }
+      ex.innerHTML = '解析：' + esc(q.explain||'');
+      // 答错时：倒推前置 + 误解卡片 + 掌握度更新
+      if(!correct){
+        let remedy = item.querySelector('.quiz-remedy');
+        if(!remedy){ remedy = document.createElement('div'); remedy.className='quiz-remedy'; item.appendChild(remedy); }
+        const chain = traceBack(item.dataset.concept, item.dataset.chapter);
+        if(chain.length > 1){
+          const links = chain.slice(1).map(({node,kind})=>{
+            const href = kind==='concept' ? `#/concept/${node.id}` : `#/chapter/${node.id}`;
+            return `<a href="${href}">${esc(node.title||node.id)}</a>`;
+          }).join(' → ');
+          remedy.innerHTML = '🔍 可能的根因（沿依赖链回溯）：' + links;
+        }
+        // 误解卡片：如果选错的选项标注了 misconceptionId
+        const checked = item.querySelector('input:checked');
+        const misId = checked ? checked.dataset.misconception : '';
+        if(misId){
+          const mis = (manifest.misconceptions||[]).find(m=>m.id===misId);
+          if(mis){
+            let misCard = item.querySelector('.misconception-card');
+            if(!misCard){ misCard = document.createElement('div'); misCard.className='misconception-card'; item.appendChild(misCard); }
+            misCard.innerHTML = `<b>⚠ 常见误解</b><br>你选了「${esc(mis.wrong)}」——${esc(mis.correction)}`;
+          }
+        }
+        // 掌握度下降
+        updateMastery(item.dataset.concept, -0.15);
+      } else {
+        updateMastery(item.dataset.concept, +0.15);
+      }
+      const ch = q.chapterId||'__all__';
+      if(!state.quiz[ch]) state.quiz[ch]={done:0,total:0};
+      state.quiz[ch].done = Math.min(state.quiz[ch].total+1, state.quiz[ch].done+1);
+      state.quiz[ch].total += 1;
+      store.set('quiz', state.quiz);
+    });
+  });
+}
+
+/* ---------- 知识图谱（vis-network） ---------- */
+let networkLoaded = false;
+function loadVisNetwork(cb){
+  if(networkLoaded){ cb(); return; }
+  if(typeof vis !== 'undefined'){ networkLoaded = true; cb(); return; }
+  if(typeof ZHISHU_OFFLINE !== 'undefined' && ZHISHU_OFFLINE) { cb(); return; }
+  const urls = [
+    'https://cdn.jsdelivr.net/npm/vis-network@9.1.9/dist/vis-network.min.js',
+    'https://unpkg.com/vis-network@9.1.9/dist/vis-network.min.js',
+    'https://registry.npmmirror.com/vis-network/9.1.9/dist/vis-network.min.js'
+  ];
+  let i = 0;
+  const tryNext = () => {
+    if(i >= urls.length) return;
+    const s = document.createElement('script');
+    s.src = urls[i++];
+    const timer = setTimeout(() => { s.onload = null; s.onerror = null; s.remove(); tryNext(); }, 4000);
+    s.onload = () => { clearTimeout(timer); networkLoaded = true; cb(); };
+    s.onerror = () => { clearTimeout(timer); s.remove(); tryNext(); };
+    document.head.appendChild(s);
+  };
+  tryNext();
+}
+function initGraph(){
+  const container = document.getElementById('graph-container');
+  if(!container) return;
+  loadVisNetwork(() => {
+    if(typeof vis === 'undefined'){ container.innerHTML = '<p class="empty">图谱库未加载：离线构建请加 <code>--offline all</code>，或联网后刷新</p>'; return; }
+    const concepts = manifest.concepts || [];
+    const chapters = manifest.chapters || [];
+    const nodes = [];
+    const edges = [];
+    concepts.forEach(c => {
+      const mastery = Math.round(getMastery(c.id)*100);
+      nodes.push({
+        id: 'c_' + c.id,
+        label: c.title || c.id,
+        title: (c.title||c.id) + '（掌握度 ' + mastery + '%）',
+        color: mastery > 70 ? '#86efac' : mastery > 40 ? '#fde68a' : '#fca5a5',
+        shape: 'dot',
+        size: mastery > 70 ? 20 : 14,
+        font: { size: 13 }
+      });
+    });
+    chapters.forEach(ch => {
+      nodes.push({
+        id: 'ch_' + ch.id,
+        label: ch.title || ch.id,
+        shape: 'box',
+        color: '#93c5fd',
+        font: { size: 12 }
+      });
+    });
+    // 前置边
+    concepts.forEach(c => {
+      (c.prerequisites || []).forEach(p => {
+        const pid = typeof p === 'string' ? p : p.id;
+        const ptype = typeof p === 'string' ? 'hard' : (p.type || 'hard');
+        const from = (pid.startsWith('ch') ? 'ch_' : 'c_') + pid;
+        const to = 'c_' + c.id;
+        if(nodes.find(n => n.id === from)){
+          edges.push({
+            from: from, to: to,
+            color: { color: ptype === 'hard' ? '#dc2626' : ptype === 'soft' ? '#9ca3af' : '#3b82f6' },
+            arrows: 'to',
+            width: ptype === 'hard' ? 2 : 1,
+            dashes: ptype !== 'hard'
+          });
+        }
+      });
+    });
+    const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+    const options = {
+      physics: { stabilization: true, barnesHut: { gravitationalConstant: -3000 } },
+      interaction: { hover: true, tooltipDelay: 200 }
+    };
+    const net = new vis.Network(container, data, options);
+    net.on('click', params => {
+      if(params.nodes.length > 0){
+        const nid = params.nodes[0];
+        if(nid.startsWith('c_')) location.hash = '#/concept/' + nid.slice(2);
+        else if(nid.startsWith('ch_')) location.hash = '#/chapter/' + nid.slice(3);
+      }
+    });
+  });
+}
+
+/* ---------- 诊断模式 ---------- */
+let diagQueue = [], diagIdx = 0, diagWrong = [];
+function initDiagnosis(){
+  const startBtn = $('#diag-start');
+  if(!startBtn || startBtn.dataset.inited) return;
+  startBtn.dataset.inited='1';
+  startBtn.addEventListener('click', ()=>{
+    const all = (manifest.quizzes||[]).slice();
+    // 随机抽 5 题（不够就全抽）
+    for(let i = all.length-1; i>0; i--){ const j = Math.floor(Math.random()*(i+1)); [all[i],all[j]]=[all[j],all[i]]; }
+    diagQueue = all.slice(0, Math.min(5, all.length));
+    diagIdx = 0; diagWrong = [];
+    showDiagQuestion();
+  });
+}
+function showDiagQuestion(){
+  const stage = $('#diag-stage');
+  const result = $('#diag-result');
+  result.innerHTML = '';
+  if(diagIdx >= diagQueue.length){ finishDiagnosis(); return; }
+  const q = diagQueue[diagIdx];
+  $('#diag-progress').textContent = `第 ${diagIdx+1} / ${diagQueue.length} 题`;
+  const fakeItem = document.createElement('div');
+  fakeItem.innerHTML = _renderQuizHTML(q, diagIdx+1);
+  stage.innerHTML = fakeItem.innerHTML;
+  // 绑定检查按钮
+  const item = stage.querySelector('.quiz-item');
+  const btn = item.querySelector('.quiz-check');
+  btn.addEventListener('click', ()=>{
+    const type = item.dataset.type;
+    let user, correct=false;
+    if(type==='single'){
+      const sel = item.querySelector('input:checked');
+      user = sel? parseInt(sel.value) : null;
+      correct = user===q.answer;
+    } else if(type==='multi'){
+      user = Array.from(item.querySelectorAll('input:checked')).map(i=>parseInt(i.value)).sort();
+      const ans = Array.isArray(q.answer)? q.answer.slice().sort(): [q.answer];
+      correct = user.length>0 && JSON.stringify(user)===JSON.stringify(ans);
+    } else if(type==='blank'){
+      const v = (item.querySelector('.quiz-blank').value||'').trim().toLowerCase();
+      correct = v===String(q.answer).trim().toLowerCase();
+    }
+    if(!correct){
+      diagWrong.push(q);
+      const chain = traceBack(q.relatedConceptId, q.chapterId);
+      if(chain.length > 1){
+        const links = chain.slice(1).map(({node,kind})=>{
+          const href = kind==='concept' ? `#/concept/${node.id}` : `#/chapter/${node.id}`;
+          return `<div class="diag-remedy-item">建议先学：<a href="${href}">${esc(node.title||node.id)}</a></div>`;
+        }).join('');
+        $('#diag-result').innerHTML = '<h3>这道题答错了，可能的根因：</h3>' + links +
+          '<p><button id="diag-next" class="quiz-check">下一题 →</button></p>';
+      } else {
+        $('#diag-result').innerHTML = '<p><button id="diag-next" class="quiz-check">下一题 →</button></p>';
+      }
+    } else {
+      $('#diag-result').innerHTML = '<p>✓ 正确。<button id="diag-next" class="quiz-check">下一题 →</button></p>';
+    }
+    $('#diag-next').addEventListener('click', ()=>{ diagIdx++; showDiagQuestion(); });
+  });
+}
+function _renderQuizHTML(q, idx){
+  // 复用服务端渲染的 quiz HTML 结构
+  const qtype = q.type||'single';
+  const qid = q.id||('diag'+idx);
+  let html = `<div class='quiz-item' data-qid='${qid}' data-type='${qtype}' data-concept='${esc(q.relatedConceptId||"")}' data-chapter='${esc(q.chapterId||"")}'>`;
+  html += `<p class='quiz-q'><b>Q${idx}.</b> ${esc(q.question||"")}</p>`;
+  if(qtype==='single'||qtype==='multi'){
+    const it = qtype==='single'?'radio':'checkbox';
+    html += "<div class='quiz-opts'>";
+    (q.options||[]).forEach((o,i)=>{ html += `<label class='quiz-opt'><input type='${it}' name='${qid}' value='${i}'> ${esc(String(o))}</label>`; });
+    html += '</div>';
+  } else {
+    html += `<input class='quiz-blank' type='text' placeholder='填写答案'>`;
+  }
+  html += `<div class='quiz-actions'><button class='quiz-check'>检查答案</button><span class='quiz-feedback'></span></div></div>`;
+  return html;
+}
+function finishDiagnosis(){
+  const total = diagQueue.length;
+  const wrong = diagWrong.length;
+  const right = total - wrong;
+  let html = `<h2>诊断完成：${right}/${total} 正确</h2>`;
+  if(wrong === 0){
+    html += '<p>🎉 这组题全对，可以继续往下学。</p>';
+  } else {
+    html += `<p>有 ${wrong} 道题答错。下面是按依赖链回溯的补强建议：</p>`;
+    const seen = new Set();
+    diagWrong.forEach(q=>{
+      const chain = traceBack(q.relatedConceptId, q.chapterId);
+      chain.slice(1).forEach(({node,kind})=>{
+        if(seen.has(node.id)) return;
+        seen.add(node.id);
+        const href = kind==='concept' ? `#/concept/${node.id}` : `#/chapter/${node.id}`;
+        html += `<div class="diag-remedy-item">📚 <a href="${href}">${esc(node.title||node.id)}</a></div>`;
+      });
+    });
+  }
+  html += '<p><button id="diag-restart" class="quiz-check">重新诊断</button></p>';
+  $('#diag-stage').innerHTML = '';
+  $('#diag-progress').textContent = '';
+  $('#diag-result').innerHTML = html;
+  $('#diag-restart').addEventListener('click', ()=>{
+    $('#diag-start').click();
+  });
+}
+
+/* ---------- 掌握度（简化 BKT） ---------- */
+function getMastery(cid){
+  if(!cid) return 0.5;
+  const m = (state.mastery||{})[cid];
+  return m !== undefined ? m : 0.3;
+}
+function updateMastery(cid, delta){
+  if(!cid) return;
+  if(!state.mastery) state.mastery = {};
+  const cur = state.mastery[cid] !== undefined ? state.mastery[cid] : 0.3;
+  state.mastery[cid] = Math.max(0, Math.min(1, cur + delta));
+  store.set('mastery', state.mastery);
+}
+function masteryBar(cid){
+  const v = Math.round(getMastery(cid)*100);
+  return `<div class="mastery-bar"><div style="width:${v}%"></div></div><span class="mastery-label">掌握度 ${v}%</span>`;
+}
+
+/* ---------- 抽认卡 ---------- */
+let cardIdx = 0, cardList = [];
+function initCards(){
+  const cards = manifest.flashcards||[];
+  cardList = cards.slice();
+  cardIdx = 0;
+  const sel = $('#card-filter');
+  sel.innerHTML = '<option value="">全部</option>';
+  [...new Set(cards.map(c=>c.chapterId).filter(Boolean))].forEach(c=>{
+    const o=document.createElement('option'); o.value=c; o.textContent=manifestChTitle(c); sel.appendChild(o);
+  });
+  sel.onchange = ()=>{ const v=sel.value; cardList = v? cards.filter(c=>c.chapterId===v): cards.slice(); cardIdx=0; showCard(); };
+  $('#flashcard').onclick = ()=>$('#flashcard').classList.toggle('flip');
+  $('#card-known-btn').onclick = ()=>{ markCard(true); };
+  $('#card-again-btn').onclick = ()=>{ markCard(false); };
+  showCard();
+}
+function showCard(){
+  updateCardCounts();
+  if(cardIdx>=cardList.length){ $('#card-stage').innerHTML='<div class="empty">本组卡片已全部复习完 🎉</div>'; return; }
+  const c = cardList[cardIdx];
+  document.querySelector('.fc-front').textContent = c.front;
+  document.querySelector('.fc-back').textContent = c.back;
+  $('#flashcard').classList.remove('flip');
+}
+function markCard(known){
+  const c = cardList[cardIdx]; if(!c) return;
+  state.cards[c.id] = known?'known':'again';
+  store.set('cards', state.cards);
+  cardIdx++; showCard();
+}
+function updateCardCounts(){
+  const known = Object.values(state.cards).filter(v=>v==='known').length;
+  const again = Object.values(state.cards).filter(v=>v==='again').length;
+  $('#card-known').textContent = known;
+  $('#card-again').textContent = again;
+  $('#card-left').textContent = Math.max(0, cardList.length-cardIdx);
+}
+function manifestChTitle(id){
+  const c=(manifest.chapters||[]).find(x=>x.id===id); return c? c.title : id;
+}
+
+/* ---------- 术语表 ---------- */
+function initGlossary(){
+  const input = $('#glossary-filter');
+  if(!input || input.dataset.inited) return;
+  input.dataset.inited='1';
+  input.oninput = ()=>{
+    const v = input.value.trim().toLowerCase();
+    $$('#glossary-list li').forEach(li=>{
+      li.style.display = (!v || li.dataset.term.includes(v)) ? '' : 'none';
+    });
+  };
+}
+
+/* ---------- 搜索 v2：分词 + 多词 + 命中定位 ---------- */
+let searchIndex = null;
+let pendingHl = [];
+function hlEscRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+function tokenizeQuery(q){
+  q = String(q||'').trim().toLowerCase();
+  if(!q) return [];
+  const STOP = new Set(['的','了','是','在','和','与','我','你','他','它','这','那','有','就','都','而','及','或',
+                        '吗','呢','吧','把','被','对','从','到','为','上','下','里','中','个','一',
+                        '什么','怎么','为什么','如何','哪些','这个','那个']);
+  const raw = q.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  const out = [];
+  for(const w of raw){
+    if(STOP.has(w)) continue;
+    if(/^\p{Script=Han}+$/u.test(w) && w.length > 2){
+      out.push(w);
+      for(let i=0;i+2<=w.length;i++) out.push(w.slice(i,i+2));
+    } else out.push(w);
+  }
+  return [...new Set(out)].slice(0,12);
+}
+function hlSnippet(text, terms){
+  const low = text.toLowerCase();
+  let pos = -1, hit = '';
+  for(const t of terms){ const i = low.indexOf(t); if(i>=0 && (pos<0 || i<pos)){ pos=i; hit=t; } }
+  const start = Math.max(0, (pos<0?0:pos) - 60);
+  const end = Math.min(text.length, (pos<0?0:pos) + 140);
+  let s = esc(text.slice(start,end));
+  let budget = 6;                                 // 每段最多标 6 处，避免常见词把片段糊满
+  terms.forEach(t=>{
+    if(t.length < 1 || budget <= 0) return;
+    s = s.replace(new RegExp(hlEscRe(t),'gi'), m=>{
+      if(budget <= 0) return m;
+      budget--;
+      return '<mark class="hl">' + m + '</mark>';
+    });
+  });
+  return '…' + s + '…';
+}
+function applyPendingHighlight(){
+  const terms = pendingHl.slice(); pendingHl = [];
+  if(!terms.length) return;
+  const root = $('#view'); if(!root) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  let node, first = null, idx = -1, term = '';
+  while((node = walker.nextNode())){
+    if(!node.nodeValue || !node.nodeValue.trim()) continue;
+    const low = node.nodeValue.toLowerCase();
+    for(const t of terms){
+      const i = low.indexOf(t);
+      if(i>=0 && (first===null || i<idx || (i===idx && t.length>term.length))){
+        first = node; idx = i; term = t;
+      }
+    }
+  }
+  if(!first) return;
+  try{
+    const i = first.nodeValue.toLowerCase().indexOf(term);
+    if(i<0) return;
+    const range = document.createRange();
+    range.setStart(first, i); range.setEnd(first, i+term.length);
+    const mark = document.createElement('mark');
+    mark.className = 'hit-hl';
+    range.surroundContents(mark);
+    mark.scrollIntoView({block:'center'});
+    mark.classList.add('hit-flash');
+    setTimeout(()=>mark.classList.remove('hit-flash'), 1800);
+  }catch(e){}
+}
+document.addEventListener('click', (e)=>{
+  const a = (e.target && e.target.closest) ? e.target.closest('.search-hit a') : null;
+  if(a && a.dataset.hl) pendingHl = tokenizeQuery(a.dataset.hl);
+});
+function searchHref(id){
+  const map = {'__path__':'#/path','__diagnosis__':'#/diagnosis','__graph__':'#/graph',
+               '__cards__':'#/cards','__glossary__':'#/glossary','__patterns__':'#/patterns',
+               '__cheatsheet__':'#/cheatsheet'};
+  if(map[id]) return map[id];
+  if(id.startsWith('__quiz_')) return '#/quiz/'+id.replace('__quiz_','').replace(/__$/,'');
+  if(id.startsWith('__')) return '';
+  return '#/'+id;
+}
+function searchLabel(id){
+  if((manifest.chapters||[]).some(c=>c.id===id)) return '章节：'+id;
+  if((manifest.concepts||[]).some(c=>c.id===id)) return '概念：'+id;
+  const map = {'__path__':'学习路径','__diagnosis__':'诊断测试','__graph__':'知识图谱','__cards__':'抽认卡',
+               '__glossary__':'术语表','__patterns__':'模式库','__cheatsheet__':'速查表'};
+  if(map[id]) return map[id];
+  if(id.startsWith('__quiz_')) return '测验';
+  return id;
+}
+function pageTitle(id){
+  const ch = (manifest.chapters||[]).find(c=>c.id===id);
+  if(ch) return ch.title || id;
+  const cp = (manifest.concepts||[]).find(c=>c.id===id);
+  if(cp) return cp.title || id;
+  const map = {'__path__':'学习路径','__diagnosis__':'诊断测试','__graph__':'知识图谱','__cards__':'抽认卡',
+               '__glossary__':'术语表','__patterns__':'模式库','__cheatsheet__':'速查表'};
+  if(map[id]) return map[id];
+  if(id.startsWith('__quiz_')){
+    const q = (manifest.quizzes||[]).find(x=>'__quiz_'+x.id===id);
+    return q ? '测验 · '+String(q.question||'').slice(0,14) : '测验';
+  }
+  return id;
+}
+function chapOf(id){
+  const chs = manifest.chapters || [];
+  const ci = chs.findIndex(c=>c.id===id);
+  if(ci >= 0) return {key:'ch:'+id, label:chs[ci].title||id, order:ci};
+  const cp = (manifest.concepts||[]).find(c=>c.id===id);
+  if(cp){
+    const chId = (cp.chapterIds||[])[0];
+    const i = chs.findIndex(c=>c.id===chId);
+    if(i >= 0) return {key:'ch:'+chId, label:chs[i].title||chId, order:i};
+    return {key:'zz', label:'未归入章节', order:900};
+  }
+  return {key:'tools', label:'术语与工具页', order:950, ref:true};
+}
+function buildSearchIndex(){
+  if(searchIndex) return searchIndex;
+  searchIndex = [];
+  Object.entries(pages).forEach(([id, htmlText])=>{
+    const href = searchHref(id);
+    if(!href) return;
+    const text = htmlText.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ');
+    searchIndex.push({id, href, text, label:pageTitle(id), chap:chapOf(id)});
+  });
+  return searchIndex;
+}
+function synOf(t){
+  const out = [];
+  for(const g of SYN_GROUPS){ if(g.indexOf(t) >= 0){ for(const x of g){ if(x !== t) out.push(x); } } }
+  return out.slice(0,6);
+}
+$('#q').addEventListener('input', e=>{
+  const v = e.target.value.trim();
+  if(!v){ showPage(routeIdFromHash()); return; }
+  const terms = tokenizeQuery(v);
+  if(!terms.length){ showPage(routeIdFromHash()); return; }
+  const grams = [];
+  terms.forEach(t=>{ if(t.length >= 2){ for(let i=0;i+2<=t.length;i++) grams.push(t.slice(i,i+2)); } });
+  const qGrams = [...new Set(grams)].slice(0,16);
+  const snippetTerms = terms.concat(...terms.map(synOf)).slice(0,24);
+  const hits = [];
+  buildSearchIndex().forEach(p=>{
+    const low = p.text.toLowerCase();
+    let tHit = 0, sHit = 0, gHit = 0, first = '', viaSyn = '';
+    for(const t of terms){
+      if(low.includes(t)){ tHit++; if(!first) first = t; continue; }
+      for(const s of synOf(t)){
+        if(low.includes(s)){ sHit++; if(!viaSyn) viaSyn = s; if(!first) first = s; break; }
+      }
+    }
+    for(const gm of qGrams){ if(low.includes(gm)) gHit++; }
+    if(tHit > 0 || sHit > 0 || gHit >= 4){
+      hits.push({p, score: tHit*100 + sHit*30 + Math.min(gHit,20), first, viaSyn});
+    }
+  });
+  hits.sort((a,b)=> b.score-a.score || a.p.text.length-b.p.text.length);
+  const top = hits.slice(0,20);
+  let body;
+  if(top.length){
+    const gs = {};
+    top.forEach(h=>{
+      const k = h.p.chap.key;
+      (gs[k] = gs[k] || {label:h.p.chap.label, order:h.p.chap.order, ref:!!h.p.chap.ref, hits:[]}).hits.push(h);
+    });
+    const eff = g => Math.max(...g.hits.map(x=>x.score)) * (g.ref ? 0.55 : 1);
+    const order = Object.values(gs).sort((a,b)=> eff(b)-eff(a));
+    body = order.map(g=>{
+      const inner = g.hits.sort((a,b)=> b.score-a.score).map(h=>
+        `<div class="search-hit"><a href="${h.p.href}" data-hl="${esc(h.first)}">${esc(h.p.label)}</a>${h.viaSyn?`<span class="syn-note">同义命中：${esc(h.viaSyn)}</span>`:''}<br><span class="sub">${hlSnippet(h.p.text, snippetTerms)}</span></div>`).join('');
+      return `<div class="search-group"><div class="grp-head">${esc(g.label)}<span class="grp-count">${g.hits.length}</span></div>${inner}</div>`;
+    }).join('');
+  } else {
+    body = '<div class="empty">未找到相关内容，试试章节名 / 概念名 / 术语，或减少关键词。</div>';
+  }
+  $('#view').innerHTML = '<h1>搜索结果：'+esc(v)+'</h1>' + body;
+});
+
+/* ---------- Mermaid 懒加载 ---------- */
+function renderMermaid(){
+  if(!document.querySelector('.mermaid')) return;
+  if(typeof ZHISHU_OFFLINE !== 'undefined' && ZHISHU_OFFLINE && typeof mermaid === 'undefined') return;
+  const boot=()=>{ try{
+    mermaid.initialize({startOnLoad:false, theme: matchMedia('(prefers-color-scheme: dark)').matches?'dark':'default'});
+    document.querySelectorAll('.mermaid').forEach(el=>{
+      const code=el.textContent;
+      mermaid.render('mm'+Math.random().toString(36).slice(2), code)
+        .then(({svg})=>{ el.innerHTML=svg; })
+        .catch(()=>{ el.textContent=code; });
+    });
+  }catch(e){} };
+  if(typeof mermaid !== 'undefined'){ boot(); return; }
+  const urls=['https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js',
+              'https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js',
+              'https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js'];
+  let ui=0, done=false;
+  const tryNext=()=>{
+    if(done || ui>=urls.length) return;
+    const s=document.createElement('script');
+    s.src=urls[ui++];
+    const timer=setTimeout(()=>{ if(done) return; s.onload=null; s.onerror=null; s.remove(); tryNext(); }, 4000);
+    s.onload=()=>{ done=true; clearTimeout(timer); boot(); };
+    s.onerror=()=>{ clearTimeout(timer); s.remove(); tryNext(); };
+    document.head.appendChild(s);
+  };
+  tryNext();
+}
+
+/* ---------- 深色模式 ---------- */
+const themeBtn=$('#theme-btn');
+themeBtn.onclick=()=>{
+  const d = document.body.dataset.theme==='dark';
+  document.body.dataset.theme = d? '' : 'dark';
+  themeBtn.textContent = d? '🌙 深色' : '☀️ 浅色';
+};
+/* ---------- 进度按钮绑定 ---------- */
+(function(){
+  const ex=$('#progress-export'), im=$('#progress-import'), fi=$('#progress-file');
+  if(ex) ex.onclick = exportProgress;
+  if(im) im.onclick = ()=> fi && fi.click();
+  if(fi) fi.onchange = ()=>{ if(fi.files && fi.files[0]) importProgress(fi.files[0]); fi.value=''; };
+})();
+
+/* ---------- 启动 ---------- */
+renderNav();
+window.addEventListener('hashchange', ()=>showPage(routeIdFromHash()));
+(function(){
+  const sb=document.querySelector('.sidebar'); if(!sb) return;
+  const btn=document.createElement('button'); btn.id='nav-toggle'; btn.textContent='目录（点开选择章节）';
+  btn.onclick=()=>sb.classList.toggle('open');
+  sb.insertBefore(btn, sb.querySelector('#nav'));
+  window.addEventListener('hashchange',()=>{ if(window.innerWidth<=760) sb.classList.remove('open'); });
+})();
+showPage(routeIdFromHash());
+
+/* ---------- 句级出处：点击角标弹出原句 ---------- */
+let citePop = null;
+function closeCite(){ if(citePop){ citePop.remove(); citePop = null; } }
+function showCite(id){
+  const c = (typeof SOURCES !== 'undefined') ? SOURCES[id] : null;
+  if(!c) return;
+  closeCite();
+  citePop = document.createElement('div');
+  citePop.className = 'cite-pop';
+  citePop.innerHTML = '<div class="cite-head">出处' + (c.page!=='' && c.page!=null ? (' · p.'+esc(String(c.page))) : '') +
+    '<button class="cite-x" aria-label="关闭">×</button></div>' +
+    (c.quote ? '<blockquote>'+esc(c.quote)+'</blockquote>' : '') +
+    (c.zh ? '<div class="cite-zh">'+esc(c.zh)+'</div>' : '');
+  document.body.appendChild(citePop);
+  citePop.querySelector('.cite-x').onclick = closeCite;
+}
+document.addEventListener('click', e=>{
+  const t = e.target.closest('.cite');
+  if(t){ e.preventDefault(); showCite(t.dataset.cite); return; }
+  if(citePop && !e.target.closest('.cite-pop')) closeCite();
+});
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeCite(); });
+</script>
+<script id="zs-visual-init">
+(function(){
+  try{
+    var B=document.body, H=document.documentElement;
+    if(!B.dataset.theme && !H.dataset.theme) B.dataset.theme='dark';
+    var EMOJI=/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+    var scope=document.querySelectorAll('header, .topbar, .topbar-fixed, #topbar, .sidebar, .tabs, .hdr-right, .card-actions, .card-controls, .section-title, .card .icon, .icon-label');
+    for(var i=0;i<scope.length;i++){
+      var w=document.createTreeWalker(scope[i],NodeFilter.SHOW_TEXT,null,false), n;
+      while(n=w.nextNode()){
+        if(EMOJI.test(n.nodeValue)){
+          n.nodeValue=n.nodeValue.replace(EMOJI,'').replace(/[ \t]+/g,' ').replace(/^ | $/g,'');
+        }
+      }
+    }
+    var btn=document.getElementById('theme-btn')||document.getElementById('theme')||document.getElementById('themeToggle');
+    function label(){
+      if(!btn) return;
+      var light=B.dataset.theme==='light'||H.getAttribute('data-theme')==='light'||B.dataset.theme==='';
+      if(btn.textContent.trim()===''||/浅色|深色/.test(btn.textContent)) btn.textContent=light?'深色':'浅色';
+    }
+    label();
+    if(btn){
+      new MutationObserver(label).observe(B,{attributes:true,attributeFilter:['data-theme']});
+      new MutationObserver(label).observe(H,{attributes:true,attributeFilter:['data-theme']});
+      btn.addEventListener('click',function(){setTimeout(label,0);},true);
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
